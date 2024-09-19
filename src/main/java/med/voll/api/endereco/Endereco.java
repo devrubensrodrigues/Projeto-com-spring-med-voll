@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import med.voll.api.medico.DadosCadastroMedico;
 import med.voll.api.medico.Medico;
 
 import java.util.List;
@@ -28,14 +29,14 @@ public class Endereco {
     @OneToMany(mappedBy = "endereco")
     private List<Medico> medico;
 
-    public Endereco(String logradouro, String bairro, String cep, String cidade, String uf, String numero, String complemento) {
-        this.logradouro = logradouro;
-        this.bairro = bairro;
-        this.cep = cep;
-        this.cidade = cidade;
-        this.uf = uf;
-        this.numero = numero;
-        this.complemento = complemento;
+    public Endereco(DadosCadastroMedico dados) {
+        this.logradouro = dados.endereco().logradouro();
+        this.bairro = dados.endereco().bairro();
+        this.cep = dados.endereco().cep();
+        this.cidade = dados.endereco().cidade();
+        this.uf = dados.endereco().uf();
+        this.numero = dados.endereco().numero();
+        this.complemento = dados.endereco().complemento();
     }
 
     @Override

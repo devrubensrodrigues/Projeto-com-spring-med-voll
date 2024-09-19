@@ -29,23 +29,20 @@ public class Medico {
     @JoinColumn(name = "endereco_id", referencedColumnName = "id")
     private Endereco endereco;
 
-    public Medico(String nome, String email, String telefone, String crm, Especialidade especialidade, Endereco endereco) {
-        this.nome = nome;
-        this.email = email;
-        this.telefone = telefone;
-        this.crm = crm;
-        this.especialidade = especialidade;
-        this.endereco = endereco;
+    public Medico(DadosCadastroMedico dados) {
+        this.nome = dados.nome();
+        this.email = dados.email();
+        this.telefone = dados.telefone();
+        this.crm = dados.crm();
+        this.especialidade = dados.especialidade();
+        this.endereco = new Endereco(dados);
     }
 
     @Override
     public String toString() {
-        return "Medico{" +
-                "nome='" + nome + '\'' +
-                ", email='" + email + '\'' +
-                ", crm='" + crm + '\'' +
-                ", especialidade=" + especialidade +
-                ", endereco=" + endereco +
-                '}';
+        return "nome: '" + nome + '\'' +
+                ", email: '" + email + '\'' +
+                ", crm: '" + crm + '\'' +
+                ", especialidade: " + especialidade;
     }
 }

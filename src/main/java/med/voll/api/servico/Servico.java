@@ -1,13 +1,19 @@
 package med.voll.api.servico;
 
+import med.voll.api.endereco.DadosEndereco;
 import med.voll.api.endereco.Endereco;
 import med.voll.api.medico.DadosCadastroMedico;
+import med.voll.api.medico.DadosListagemMedico;
 import med.voll.api.medico.Medico;
 import med.voll.api.repository.MedicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class Servico {
@@ -15,13 +21,13 @@ public class Servico {
     private MedicoRepository repository;
 
     public void addDadosMedico(DadosCadastroMedico dados) {
-        repository.save(converteMedicoDadosMedico(dados));
+        Medico medico = new Medico(dados);
+        verificarEndereco(medico.getEndereco());
+        repository.save(medico);
     }
 
-    private Medico converteMedicoDadosMedico(DadosCadastroMedico dados) {
-        Medico medico = new Medico(dados.nome(), dados.email(), dados.telefone(), dados.crm(), dados.especialidade(),
-                verificarEndereco(new Endereco(dados.endereco().logradouro(), dados.endereco().bairro(), dados.endereco().cep(), dados.endereco().cidade(), dados.endereco().uf(), dados.endereco().numero(), dados.endereco().complemento())));
-        return medico;
+    public Page<DadosListagemMedico> buscaMedicos(Pageable pageable) {
+        return repository.findAll(pageable).map(DadosListagemMedico::new);
     }
 
     private Endereco verificarEndereco(Endereco endereco) {

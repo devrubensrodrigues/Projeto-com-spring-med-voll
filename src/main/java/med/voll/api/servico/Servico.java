@@ -1,6 +1,5 @@
 package med.voll.api.servico;
 
-import med.voll.api.endereco.DadosEndereco;
 import med.voll.api.endereco.Endereco;
 import med.voll.api.medico.DadosCadastroMedico;
 import med.voll.api.medico.DadosListagemMedico;
@@ -11,9 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class Servico {

@@ -32,4 +32,10 @@ public class MedicoController {
     public void atualizarMedicos(@RequestBody @Valid DadosAtualizaMedico dados) {
         servico.atualizaDadosMedico(dados);
     }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void excluirMedico(@PathVariable Long id) {
+        servico.excluirMedico(id);
+    }
 }

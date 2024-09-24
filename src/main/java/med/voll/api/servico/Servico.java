@@ -11,7 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class Servico {
@@ -25,7 +27,14 @@ public class Servico {
     }
 
     public Page<DadosListagemMedico> buscaMedicos(Pageable pageable) {
-        return repository.findAll(pageable).map(DadosListagemMedico::new);
+        return repository.findByAtivoTrue(pageable)
+                .map(DadosListagemMedico::new);
+    }
+
+    private Endereco verificarEndereco(Endereco endereco) {
+        Optional<Endereco> enderecoExistente = repository.buscarEndereco(endereco.getLogradouro(), endereco.getBairro(), endereco.getCep(), endereco.getCidade(), endereco.getUf(), endereco.getNumero());
+
+        return enderecoExistente.orElse(endereco);
     }
 
     public void atualizaDadosMedico(DadosAtualizaMedico dados) {
@@ -33,9 +42,8 @@ public class Servico {
         medico.atualizarInformacoes(dados);
     }
 
-    private Endereco verificarEndereco(Endereco endereco) {
-        Optional<Endereco> enderecoExistente = repository.buscarEndereco(endereco.getLogradouro(), endereco.getBairro(), endereco.getCep(), endereco.getCidade(), endereco.getUf(), endereco.getNumero());
-
-        return enderecoExistente.orElse(endereco);
+    public void excluirMedico(Long id) {
+        var medico = repository.getReferenceById(id);
+        medico.excluirMedico();
     }
 }

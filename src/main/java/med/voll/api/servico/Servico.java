@@ -1,6 +1,7 @@
 package med.voll.api.servico;
 
 import med.voll.api.endereco.Endereco;
+import med.voll.api.medico.DadosAtualizaMedico;
 import med.voll.api.medico.DadosCadastroMedico;
 import med.voll.api.medico.DadosListagemMedico;
 import med.voll.api.medico.Medico;
@@ -25,6 +26,11 @@ public class Servico {
 
     public Page<DadosListagemMedico> buscaMedicos(Pageable pageable) {
         return repository.findAll(pageable).map(DadosListagemMedico::new);
+    }
+
+    public void atualizaDadosMedico(DadosAtualizaMedico dados) {
+        var medico = repository.getReferenceById(dados.id());
+        medico.atualizarInformacoes(dados);
     }
 
     private Endereco verificarEndereco(Endereco endereco) {

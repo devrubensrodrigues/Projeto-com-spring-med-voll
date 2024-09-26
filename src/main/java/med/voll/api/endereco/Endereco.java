@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.medico.DadosCadastroMedico;
 import med.voll.api.medico.Medico;
+import med.voll.api.paciente.DadosCadastroPaciente;
 
 import java.util.List;
 
@@ -26,10 +27,18 @@ public class Endereco {
     @Column(unique = true)
     private String numero;
     private String complemento;
-    @OneToMany(mappedBy = "endereco")
-    private List<Medico> medico;
 
     public Endereco(DadosCadastroMedico dados) {
+        this.logradouro = dados.endereco().logradouro();
+        this.bairro = dados.endereco().bairro();
+        this.cep = dados.endereco().cep();
+        this.cidade = dados.endereco().cidade();
+        this.uf = dados.endereco().uf();
+        this.numero = dados.endereco().numero();
+        this.complemento = dados.endereco().complemento();
+    }
+
+    public Endereco(DadosCadastroPaciente dados) {
         this.logradouro = dados.endereco().logradouro();
         this.bairro = dados.endereco().bairro();
         this.cep = dados.endereco().cep();

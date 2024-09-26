@@ -28,7 +28,7 @@ public class Medico {
     @Enumerated(EnumType.STRING)
     private Especialidade especialidade;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "endereco_id", referencedColumnName = "id")
+    @JoinColumn(name = "endereco_id")
     private Endereco endereco;
     private Boolean ativo;
 

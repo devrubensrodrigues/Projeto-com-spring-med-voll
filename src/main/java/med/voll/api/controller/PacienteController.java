@@ -1,6 +1,7 @@
 package med.voll.api.controller;
 
 import jakarta.validation.Valid;
+import med.voll.api.paciente.DadosAtualizaPaciente;
 import med.voll.api.paciente.DadosCadastroPaciente;
 import med.voll.api.paciente.DadosListagemPaciente;
 import med.voll.api.servico.Servico;
@@ -26,5 +27,11 @@ public class PacienteController {
     @GetMapping
     public Page<DadosListagemPaciente> buscarPacientes(@PageableDefault(size = 10, sort = {"nome"})Pageable pageable) {
         return servico.buscaPacientes(pageable);
+    }
+
+    @PutMapping
+    @Transactional
+    public void atualizaPaciente(@RequestBody @Valid DadosAtualizaPaciente dados) {
+        servico.atualizaDadosPaciente(dados);
     }
 }

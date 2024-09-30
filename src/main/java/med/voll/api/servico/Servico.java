@@ -5,6 +5,7 @@ import med.voll.api.medico.DadosAtualizaMedico;
 import med.voll.api.medico.DadosCadastroMedico;
 import med.voll.api.medico.DadosListagemMedico;
 import med.voll.api.medico.Medico;
+import med.voll.api.paciente.DadosAtualizaPaciente;
 import med.voll.api.paciente.DadosCadastroPaciente;
 import med.voll.api.paciente.DadosListagemPaciente;
 import med.voll.api.paciente.Paciente;
@@ -16,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class Servico {
@@ -61,5 +61,10 @@ public class Servico {
         Optional<Endereco> enderecoExistente = medicoRepository.buscarEndereco(endereco.getLogradouro(), endereco.getBairro(), endereco.getCep(), endereco.getCidade(), endereco.getUf(), endereco.getNumero());
 
         return enderecoExistente.orElse(endereco);
+    }
+
+    public void atualizaDadosPaciente(DadosAtualizaPaciente dados) {
+        Paciente paciente = pacienteRrepository.getReferenceById(dados.id());
+        paciente.atualizarInformacoes(dados);
     }
 }

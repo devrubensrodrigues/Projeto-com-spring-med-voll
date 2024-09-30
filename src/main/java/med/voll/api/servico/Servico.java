@@ -53,7 +53,7 @@ public class Servico {
     }
 
     public Page<DadosListagemPaciente> buscaPacientes(Pageable pageable) {
-        return pacienteRrepository.findAll(pageable)
+        return pacienteRrepository.findByAtivoTrue(pageable)
                 .map(DadosListagemPaciente::new);
     }
 

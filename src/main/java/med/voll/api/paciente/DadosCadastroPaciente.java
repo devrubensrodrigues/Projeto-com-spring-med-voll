@@ -18,6 +18,7 @@ public record DadosCadastroPaciente(@NotBlank
                                     @NotBlank
                                     @Pattern(regexp = "\\d{11}")
                                     String cpf,
+                                    //Para validar o endereço eu estava usando o NotBlank e por isso estava dando erro
                                     @NotNull
                                     @Valid
                                     DadosEndereco endereco) {

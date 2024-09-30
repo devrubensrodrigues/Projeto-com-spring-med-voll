@@ -67,4 +67,9 @@ public class Servico {
         Paciente paciente = pacienteRrepository.getReferenceById(dados.id());
         paciente.atualizarInformacoes(dados);
     }
+
+    public void excluirPaciente(Long id) {
+        var paciente = pacienteRrepository.getReferenceById(id);
+        paciente.setAtivo(false);
+    }
 }

@@ -34,4 +34,10 @@ public class PacienteController {
     public void atualizaPaciente(@RequestBody @Valid DadosAtualizaPaciente dados) {
         servico.atualizaDadosPaciente(dados);
     }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void excluirPaciente(@PathVariable Long id) {
+        servico.excluirPaciente(id);
+    }
 }

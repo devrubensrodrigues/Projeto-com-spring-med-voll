@@ -26,6 +26,7 @@ public class Paciente {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
+    private boolean ativo;
 
     public Paciente(DadosCadastroPaciente dados) {
         this.nome = dados.nome();
@@ -33,6 +34,7 @@ public class Paciente {
         this.telefone = dados.telefone();
         this.cpf = dados.cpf();
         this.endereco = new Endereco(dados);
+        this.ativo = true;
     }
 
     public void atualizarInformacoes(DadosAtualizaPaciente dados) {

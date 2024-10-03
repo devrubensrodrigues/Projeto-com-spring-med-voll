@@ -5,9 +5,10 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import med.voll.api.consulta.Consulta;
 import med.voll.api.endereco.Endereco;
 
-;
+;import java.util.List;
 
 @Entity
 @Table(name = "tb_medicos", uniqueConstraints = {
@@ -31,6 +32,8 @@ public class Medico {
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
     private Boolean ativo;
+    @OneToMany(mappedBy = "medico")
+    private List<Consulta> consultas;
 
     public Medico(DadosCadastroMedico dados) {
         this.ativo = true;

@@ -1,5 +1,7 @@
 package med.voll.api.servico;
 
+import med.voll.api.consulta.Consulta;
+import med.voll.api.consulta.DadosCadastroConsulta;
 import med.voll.api.endereco.Endereco;
 import med.voll.api.medico.DadosAtualizaMedico;
 import med.voll.api.medico.DadosCadastroMedico;
@@ -9,6 +11,7 @@ import med.voll.api.paciente.DadosAtualizaPaciente;
 import med.voll.api.paciente.DadosCadastroPaciente;
 import med.voll.api.paciente.DadosListagemPaciente;
 import med.voll.api.paciente.Paciente;
+import med.voll.api.repository.ConsultaRepository;
 import med.voll.api.repository.MedicoRepository;
 import med.voll.api.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,8 @@ public class Servico {
     private MedicoRepository medicoRepository;
     @Autowired
     private PacienteRepository pacienteRrepository;
+    @Autowired
+    private ConsultaRepository consultaRepository;
 
     public void addDadosMedico(DadosCadastroMedico dados) {
         Medico medico = new Medico(dados);
@@ -64,12 +69,20 @@ public class Servico {
     }
 
     public void atualizaDadosPaciente(DadosAtualizaPaciente dados) {
-        Paciente paciente = pacienteRrepository.getReferenceById(dados.id());
+        var paciente = pacienteRrepository.getReferenceById(dados.id());
         paciente.atualizarInformacoes(dados);
     }
 
     public void excluirPaciente(Long id) {
         var paciente = pacienteRrepository.getReferenceById(id);
         paciente.setAtivo(false);
+    }
+
+    public void agendarConsulta(DadosCadastroConsulta dados) {
+        var paciente = pacienteRrepository.getReferenceById(dados.pacienteId());
+        var medico = medicoRepository.getReferenceById(dados.medicoId());
+
+        Consulta consulta = new Consulta(paciente, medico, dados.dataHora());
+        consultaRepository.save(consulta);
     }
 }

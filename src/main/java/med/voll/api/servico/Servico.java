@@ -83,7 +83,7 @@ public class Servico {
         var paciente = pacienteRrepository.getReferenceById(dados.pacienteId());
         var medico = medicoRepository.getReferenceById(dados.medicoId());
 
-        var consulta = ConsultaFactory.validarParametrosConsulta(paciente, medico, dados.dataHora());
+        var consulta = ConsultaFactory.validarParametrosConsulta(paciente, medico, dados);
         consultaRepository.save(consulta);
     }
 }

@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import med.voll.api.enums.DiaSemana;
 import med.voll.api.medico.Medico;
 import med.voll.api.paciente.Paciente;
 
@@ -28,11 +29,16 @@ public class Consulta {
     @JoinColumn(name = "medico_id")
     private Medico medico;
     private LocalDateTime dataHora;
+    private LocalDateTime horaFinal;
+    @Enumerated(EnumType.STRING)
+    private DiaSemana diaConsulta;
 
     public Consulta(Paciente paciente, Medico medico, String dataHora) {
         this.paciente = paciente;
         this.medico = medico;
         this.dataHora = formatarDataHora(dataHora);
+        this.horaFinal = this.dataHora.plusHours(1);
+        this.diaConsulta = DiaSemana.fromDayOfWeek(this.dataHora.getDayOfWeek());
     }
 
     private LocalDateTime formatarDataHora(String dataHora) {

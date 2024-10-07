@@ -1,6 +1,7 @@
 package med.voll.api.servico;
 
 import med.voll.api.consulta.Consulta;
+import med.voll.api.consulta.ConsultaFactory;
 import med.voll.api.consulta.DadosCadastroConsulta;
 import med.voll.api.endereco.Endereco;
 import med.voll.api.medico.DadosAtualizaMedico;
@@ -82,7 +83,7 @@ public class Servico {
         var paciente = pacienteRrepository.getReferenceById(dados.pacienteId());
         var medico = medicoRepository.getReferenceById(dados.medicoId());
 
-        Consulta consulta = new Consulta(paciente, medico, dados.dataHora());
+        var consulta = ConsultaFactory.validarParametrosConsulta(paciente, medico, dados.dataHora());
         consultaRepository.save(consulta);
     }
 }

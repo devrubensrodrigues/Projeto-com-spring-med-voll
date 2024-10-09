@@ -30,6 +30,8 @@ public class Servico {
     private PacienteRepository pacienteRrepository;
     @Autowired
     private ConsultaRepository consultaRepository;
+    @Autowired
+    private ConsultaFactory consultaFactory;
 
     public void addDadosMedico(DadosCadastroMedico dados) {
         Medico medico = new Medico(dados);
@@ -83,7 +85,7 @@ public class Servico {
         var paciente = pacienteRrepository.getReferenceById(dados.pacienteId());
         var medico = medicoRepository.getReferenceById(dados.medicoId());
 
-        var consulta = ConsultaFactory.validarParametrosConsulta(paciente, medico, dados);
+        var consulta = consultaFactory.validarParametrosConsulta(paciente, medico, dados);
         consultaRepository.save(consulta);
     }
 }
